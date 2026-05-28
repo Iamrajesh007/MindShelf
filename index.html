@@ -14,6 +14,7 @@
         }
         body {
             background-color: #0b0f17;
+            /* Combines your static header gradient with a dynamic, moving radial cursor glow */
             background-image: 
                 radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12) 0%, transparent 45%),
                 radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
@@ -26,6 +27,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
+        /* Subtle interactive hover illumination for the dashboard cards */
         .glass-panel:hover {
             border-color: rgba(16, 185, 129, 0.35);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
@@ -46,28 +48,51 @@
             font-weight: 900;
             letter-spacing: 0.25em;
             text-transform: uppercase;
+            /* Laser outline drawing effect during initialization */
             stroke: #10b981;
             stroke-width: 0.6px;
             fill: url(#header-gradient);
             fill-opacity: 0;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
+            /* Combines line drawing with a smooth fade-in color fill */
             animation: drawOutline 2s ease-in-out forwards, fillText 0.8s ease-in forwards 1.6s;
         }
+
         @keyframes drawOutline {
             0% { stroke-dashoffset: 400; stroke-width: 0.6px; }
             70% { stroke-width: 0.4px; }
             100% { stroke-dashoffset: 0; stroke-width: 0px; }
         }
+
         @keyframes fillText {
             0% { fill-opacity: 0; }
             100% { fill-opacity: 1; }
+        }
+
+        /* --- Refactored Cyberpunk Spotify Equalizer Plugin --- */
+        .spotify-bar {
+            width: 3px;
+            height: 18px;
+            background-color: #111827;
+            animation: bounceEqualizer 1s ease-in-out infinite alternate;
+            border-radius: 4px;
+            margin: 0 1.5px;
+        }
+        .spotify-bar:nth-child(1) { animation-delay: 0.1s; background-color: #10b981; }
+        .spotify-bar:nth-child(2) { animation-delay: 0.4s; background-color: #34d399; height: 22px; }
+        .spotify-bar:nth-child(3) { animation-delay: 0.2s; background-color: #059669; }
+        .spotify-bar:nth-child(4) { animation-delay: 0.6s; background-color: #6ee7b7; }
+
+        @keyframes bounceEqualizer {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1.1); }
         }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen font-sans pb-12">
 
-    <header class="w-full max-w-7xl mx-auto px-4 pt-6 pb-2 flex flex-col md:flex-row justify-between items-center border-b border-emerald-900/30 mb-8 gap-4">
+    <header class="w-full max-w-7xl mx-auto px-4 pt-6 pb-2 flex flex-col sm:flex-row justify-between items-center border-b border-emerald-900/30 mb-8 gap-4">
         <div>
             <div class="h-10 flex items-center select-none">
                 <svg viewBox="0 0 320 30" class="w-[260px] sm:w-[320px] h-full overflow-visible">
@@ -80,21 +105,25 @@
                     <text x="0" y="22" class="intro-svg-text">MINDSHELF</text>
                 </svg>
             </div>
-            <p class="text-xs text-emerald-500/70 tracking-widest uppercase text-center md:text-left">L I B R A R Y</p>
+            <p class="text-xs text-emerald-500/70 tracking-widest uppercase text-center sm:text-left">L I B R A R Y</p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto justify-end">
-            <div class="w-full sm:w-[300px] h-[80px] rounded-2xl overflow-hidden border border-emerald-500/20 shadow-lg bg-black/40 backdrop-blur-md">
-                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1E4vTz3b2Sj1Xb?utm_source=generator&theme=0" 
-                        width="100%" 
-                        height="100%" 
-                        frameBorder="0" 
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                        loading="lazy">
-                </iframe>
+        <div class="flex items-center space-x-3">
+            <div class="flex items-center bg-emerald-950/20 border border-emerald-500/15 rounded-full pl-3 pr-4 py-1.5 backdrop-blur-md">
+                <i class="fa-brands fa-spotify text-emerald-400 text-lg mr-2 animate-spin [animation-duration:12s]"></i>
+                <div class="flex flex-col max-w-[110px] sm:max-w-[140px] mr-3 font-mono">
+                    <span class="text-[10px] text-emerald-400 font-bold tracking-wide truncate">Weightless</span>
+                    <span class="text-[8px] text-gray-500 truncate">Arijit Singh</span>
+                </div>
+                <div class="flex items-center h-5 overflow-visible">
+                    <div class="spotify-bar"></div>
+                    <div class="spotify-bar"></div>
+                    <div class="spotify-bar"></div>
+                    <div class="spotify-bar"></div>
+                </div>
             </div>
 
-            <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 rounded-full border border-emerald-500/20 text-emerald-400 h-[40px] sm:h-[80px] w-full sm:w-auto justify-center">
+            <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 py-2.5 rounded-full border border-emerald-500/20 text-emerald-400 h-[38px]">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1"></span> SYNCED
             </div>
         </div>
@@ -249,6 +278,8 @@
         }
 
         // --- REALTIME DATA SYNC ---
+        
+        // 1. Sync Movies
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -283,6 +314,7 @@
             });
         });
 
+        // 2. Sync Study Materials
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;
@@ -303,6 +335,7 @@
             });
         });
 
+        // 3. Sync Quotes
         onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("quote-list");
             list.innerHTML = "";
@@ -324,7 +357,9 @@
             const title = document.getElementById("movie-title");
             const genre = document.getElementById("movie-genre");
             const type = document.getElementById("movie-type");
+            
             if(!title.value.trim()) return;
+            
             await addDoc(collection(db, "movies"), { 
                 title: title.value, 
                 genre: genre.value || "General", 
@@ -333,7 +368,11 @@
                 watched: false, 
                 createdAt: new Date() 
             });
-            title.value = ""; genre.value = ""; type.value = "Movie"; setRating(0);
+            
+            title.value = ""; 
+            genre.value = "";
+            type.value = "Movie";
+            setRating(0);
         };
 
         window.addStudyMaterial = async () => {
@@ -356,6 +395,7 @@
         window.toggleMovie = async (id, currentStatus) => {
             await updateDoc(doc(db, "movies", id), { watched: !currentStatus });
         };
+
         window.deleteItem = async (collectionName, id) => {
             if(confirm("Purge document from core memory?")) {
                 await deleteDoc(doc(db, collectionName, id));

@@ -14,6 +14,7 @@
         }
         body {
             background-color: #0b0f17;
+            /* Combines your static header gradient with a dynamic, moving radial cursor glow */
             background-image: 
                 radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12) 0%, transparent 45%),
                 radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
@@ -26,6 +27,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
+        /* Subtle interactive hover illumination for the dashboard cards */
         .glass-panel:hover {
             border-color: rgba(16, 185, 129, 0.35);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
@@ -46,19 +48,23 @@
             font-weight: 900;
             letter-spacing: 0.25em;
             text-transform: uppercase;
+            /* Laser outline drawing effect during initialization */
             stroke: #10b981;
             stroke-width: 0.6px;
             fill: url(#header-gradient);
             fill-opacity: 0;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
+            /* Combines line drawing with a smooth fade-in color fill */
             animation: drawOutline 2s ease-in-out forwards, fillText 0.8s ease-in forwards 1.6s;
         }
+
         @keyframes drawOutline {
             0% { stroke-dashoffset: 400; stroke-width: 0.6px; }
             70% { stroke-width: 0.4px; }
             100% { stroke-dashoffset: 0; stroke-width: 0px; }
         }
+
         @keyframes fillText {
             0% { fill-opacity: 0; }
             100% { fill-opacity: 1; }
@@ -83,13 +89,13 @@
             100% { transform: scaleY(1.1); }
         }
 
-        /* --- Uiverse Advanced Neo-Toggle Framework (Scoped) --- */
+        /* --- Uiverse Advanced Neo-Toggle Framework --- */
         .neo-toggle-container {
             --toggle-width: 72px;
             --toggle-height: 34px;
             --toggle-bg: #090d16;
-            --toggle-off-color: #f43f5e; /* Custom Red configuration when Unwatched */
-            --toggle-on-color: #36f9c7;
+            --toggle-off-color: #f43f5e; /* Vibrant Red when Unwatched */
+            --toggle-on-color: #36f9c7;   /* Emerald Green when Watched */
             --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
             display: inline-flex;
@@ -204,7 +210,7 @@
         .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.7s 0.2s infinite; }
         @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 7px; } }
 
-        /* --- Uiverse Refactored High-Tech Bin Action Button --- */
+        /* --- Recalibrated and Filled Cyberpunk Bin Button --- */
         .bin-button {
             display: flex;
             flex-direction: column;
@@ -220,16 +226,28 @@
             position: relative;
             overflow: hidden;
         }
-        .bin-bottom { width: 10px; z-index: 2; fill: #f43f5e; transition: fill 0.3s; }
-        .bin-top { width: 11px; transform-origin: right; transition-duration: 0.3s; z-index: 2; fill: #f43f5e; }
+        .bin-bottom { 
+            width: 15px; 
+            z-index: 2; 
+            fill: #f43f5e; 
+            transition: fill 0.3s; 
+            margin-top: -1px;
+        }
+        .bin-top { 
+            width: 17px; 
+            transform-origin: right center; 
+            transition-duration: 0.3s; 
+            z-index: 2; 
+            fill: #f43f5e; 
+        }
         .bin-button:hover .bin-top { transform: rotate(45deg); fill: #ffffff; }
         .bin-button:hover .bin-bottom { fill: #ffffff; }
         .bin-button:hover { background-color: #e11d48; border-color: #f43f5e; }
         .bin-button:active { transform: scale(0.92); }
-        .garbage { position: absolute; width: 9px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
+        .garbage { position: absolute; width: 12px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
         .bin-button:hover .garbage { animation: throw 0.4s linear; }
         @keyframes throw {
-            from { transform: translate(-150%, -150%); opacity: 0; }
+            from { transform: translate(-100%, -100%); opacity: 0; }
             to { transform: translate(0%, 0%); opacity: 1; }
         }
     </style>
@@ -423,7 +441,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies (Using Advanced Neo-Toggles & Animated Bin Buttons)
+        // 1. Sync Movies (Using Advanced Neo-Toggles & Recalibrated Bin Buttons)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -473,7 +491,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom">
                                     <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 33 39" class="garbage">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="garbage">
                                     <path d="M14 14H16V22H14V14ZM18 14H20V22H18V14Z"></path>
                                 </svg>
                             </button>
@@ -482,7 +500,7 @@
             });
         });
 
-        // 2. Sync Study Materials (Upgraded with Animated Bin Button)
+        // 2. Sync Study Materials (Upgraded with Recalibrated Bin Button)
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;

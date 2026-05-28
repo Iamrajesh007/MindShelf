@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M I N D S H E L F</title>
+    <title>M I N D  S H E L F</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -123,4 +123,292 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2 text-xs font-
+            <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 py-2.5 rounded-full border border-emerald-500/20 text-emerald-400 h-[38px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1"></span> SYNCED
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-film text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Movie Library</h2>
+                </div>
+                <span id="movie-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
+            </div>
+
+            <div class="space-y-2 mb-4 bg-slate-950/30 p-3 rounded-xl border border-emerald-950/50">
+                <input type="text" id="movie-title" placeholder="Title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-3 py-2 text-sm neon-glow transition-all">
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="movie-genre" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
+                        <option value="" disabled selected>Genre...</option>
+                        <option value="Action">Action</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Wholesome">Wholesome</option>
+                    </select>
+
+                    <select id="movie-type" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
+                        <option value="Movie">Movie</option>
+                        <option value="Web Series">Web Series</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <div class="flex items-center space-x-1">
+                        <span class="text-xs text-gray-400 mr-1 font-mono">Rating:</span>
+                        <div id="star-rating-selector" class="text-gray-600 flex space-x-1 text-sm">
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(1)" data-index="1"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(2)" data-index="2"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(3)" data-index="3"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(4)" data-index="4"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(5)" data-index="5"></i>
+                        </div>
+                    </div>
+
+                    <button onclick="addMovie()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-md active:scale-95">
+                        Add Media
+                    </button>
+                </div>
+            </div>
+
+            <div id="movie-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            </div>
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Study Stack</h2>
+                </div>
+                <span id="study-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <input type="text" id="study-topic" placeholder="Topic or subject..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2.5 text-sm neon-glow transition-all">
+                <div class="flex space-x-2">
+                    <input type="text" id="study-link" placeholder="Resource URL (Optional)" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addStudyMaterial()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Track
+                    </button>
+                </div>
+            </div>
+
+            <div id="study-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            </div>
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Neural Echoes</h2>
+                </div>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <textarea id="quote-text" rows="2" placeholder="Write or paste an inspiring thought..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all resize-none"></textarea>
+                <div class="flex space-x-2">
+                    <input type="text" id="quote-author" placeholder="Author" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addQuote()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Inject
+                    </button>
+                </div>
+            </div>
+
+            <div id="quote-list" class="flex-1 overflow-y-auto space-y-3 pr-1">
+            </div>
+        </section>
+
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQTS1ll4900i_1rVmeVHMSSKR-JMMD3pU",
+            authDomain: "zentro-9198c.firebaseapp.com",
+            projectId: "zentro-9198c",
+            storageBucket: "zentro-9198c.firebasestorage.app",
+            messagingSenderId: "870979959946",
+            appId: "1:870979959946:web:f7456f422be3aa09a78173"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentSelectedRating = 0;
+
+        window.setRating = (rating) => {
+            currentSelectedRating = rating;
+            const stars = document.querySelectorAll('#star-rating-selector i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-gray-600');
+                    star.classList.add('text-emerald-400');
+                } else {
+                    star.classList.add('text-gray-600');
+                    star.classList.remove('text-emerald-400');
+                }
+            });
+        };
+
+        function buildStarRatingDOM(ratingCount) {
+            let ratingStarsHTML = '';
+            for(let i = 1; i <= 5; i++) {
+                ratingStarsHTML += `<i class="fa-solid fa-star text-[10px] ${i <= ratingCount ? 'text-emerald-400' : 'text-gray-700'}"></i>`;
+            }
+            return ratingStarsHTML;
+        }
+
+        // --- REALTIME DATA SYNC ---
+        
+        // 1. Sync Movies
+        onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("movie-list");
+            document.getElementById("movie-count").innerText = snapshot.size;
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const starLayout = buildStarRatingDOM(data.rating || 0);
+                const formatBadge = data.type || "Movie";
+                const isChecked = data.watched ? "checked" : "";
+                
+                list.innerHTML += `
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
+                        <div class="truncate mr-2 max-w-[60%]">
+                            <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
+                            <div class="flex items-center space-x-2 mt-0.5">
+                                <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
+                                <span class="text-[10px] text-gray-500 font-medium">${data.genre || 'General'}</span>
+                                <div class="flex space-x-0.5 pl-1">${starLayout}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 flex-shrink-0">
+                            <label class="relative inline-flex items-center cursor-pointer scale-[0.7] select-none">
+                                <input type="checkbox" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="sr-only peer">
+                                <div class="peer ring-0 bg-rose-400 rounded-full outline-none duration-300 after:duration-500 w-12 h-12 shadow-md peer-checked:bg-emerald-500 peer-focus:outline-none after:content-['✖️'] after:rounded-full after:absolute after:outline-none after:h-10 after:w-10 after:bg-gray-50 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-hover:after:scale-75 peer-checked:after:content-['✔️'] after:-rotate-180 peer-checked:after:rotate-0 peer-checked:after:left-1">
+                                </div>
+                            </label>
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>`;
+            });
+        });
+
+        // 2. Sync Study Materials
+        onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("study-list");
+            document.getElementById("study-count").innerText = snapshot.size;
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const linkHTML = data.link ? `<a href="${data.link.startsWith('http') ? data.link : 'https://' + data.link}" target="_blank" class="text-xs text-teal-400 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[10px]"></i> Resource</a>` : '';
+                list.innerHTML += `
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
+                        <div class="truncate mr-2">
+                            <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
+                            ${linkHTML}
+                        </div>
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1 flex-shrink-0">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>`;
+            });
+        });
+
+        // 3. Sync Quotes
+        onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("quote-list");
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                list.innerHTML += `
+                    <div class="bg-gradient-to-br from-emerald-950/30 to-slate-950/60 p-4 rounded-xl border border-emerald-950/50 relative group">
+                        <p class="text-sm italic text-emerald-100/90 tracking-wide">"${data.text}"</p>
+                        <p class="text-right text-xs font-mono text-emerald-400/70 mt-2">— ${data.author || 'Unknown'}</p>
+                        <button onclick="deleteItem('quotes', '${doc.id}')" class="absolute top-2 right-2 text-[10px] text-red-900/40 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>`;
+            });
+        });
+
+        // --- WRITE ACTIONS ---
+        window.addMovie = async () => {
+            const title = document.getElementById("movie-title");
+            const genre = document.getElementById("movie-genre");
+            const type = document.getElementById("movie-type");
+            
+            if(!title.value.trim()) return;
+            
+            await addDoc(collection(db, "movies"), { 
+                title: title.value, 
+                genre: genre.value || "General", 
+                type: type.value,
+                rating: currentSelectedRating,
+                watched: false, 
+                createdAt: new Date() 
+            });
+            
+            title.value = ""; 
+            genre.value = "";
+            type.value = "Movie";
+            setRating(0);
+        };
+
+        window.addStudyMaterial = async () => {
+            const topic = document.getElementById("study-topic");
+            const link = document.getElementById("study-link");
+            if(!topic.value.trim()) return;
+            await addDoc(collection(db, "study_materials"), { topic: topic.value, link: link.value, createdAt: new Date() });
+            topic.value = ""; link.value = "";
+        };
+
+        window.addQuote = async () => {
+            const text = document.getElementById("quote-text");
+            const author = document.getElementById("quote-author");
+            if(!text.value.trim()) return;
+            await addDoc(collection(db, "quotes"), { text: text.value, author: author.value, createdAt: new Date() });
+            text.value = ""; author.value = "";
+        };
+
+        // --- UPDATE & DELETE ACTIONS ---
+        window.toggleMovie = async (id, currentStatus) => {
+            await updateDoc(doc(db, "movies", id), { watched: !currentStatus });
+        };
+
+        window.deleteItem = async (collectionName, id) => {
+            if(confirm("Purge document from core memory?")) {
+                await deleteDoc(doc(db, collectionName, id));
+            }
+        };
+
+        // --- AMBIENT MOUSE TRACKING ANIMATION ---
+        window.addEventListener('mousemove', (e) => {
+            const x = ((e.clientX / window.innerWidth) * 100).toFixed(2);
+            const y = ((e.clientY / window.innerHeight) * 100).toFixed(2);
+            document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${y}%`);
+        });
+    </script>
+</body>
+</html>

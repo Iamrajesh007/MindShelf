@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Nexus // Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0b0f17;
+            background-image: radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
+        }
+        .glass-panel {
+            background: rgba(16, 24, 40, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .neon-glow:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body class="text-gray-200 min-h-screen font-sans pb-12">
+
+    <header class="w-full max-w-7xl mx-auto px-4 pt-6 pb-2 flex justify-between items-center border-b border-emerald-900/30 mb-8">
+        <div>
+            <h1 class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">
+                NEXUS // CORE
+            </h1>
+            <p class="text-xs text-emerald-500/70 tracking-widest uppercase">Central Command Hub</p>
+        </div>
+        <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 py-1.5 rounded-full border border-emerald-500/20 text-emerald-400">
+            <span class="w-2 height-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1"></span> SYNCED
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-film text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Movie Library</h2>
+                </div>
+                <span id="movie-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <input type="text" id="movie-title" placeholder="Movie title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2.5 text-sm neon-glow transition-all">
+                <div class="flex space-x-2">
+                    <input type="text" id="movie-genre" placeholder="Genre" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addMovie()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <div id="movie-list" class="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                </div>
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Study Stack</h2>
+                </div>
+                <span id="study-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <input type="text" id="study-topic" placeholder="Topic or subject (e.g., DSA / Logic)..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2.5 text-sm neon-glow transition-all">
+                <div class="flex space-x-2">
+                    <input type="text" id="study-link" placeholder="Resource URL (Optional)" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addStudyMaterial()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Track
+                    </button>
+                </div>
+            </div>
+
+            <div id="study-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+                </div>
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                    </div>
+                    <h2 class="text-lg font-bold tracking-wide">Neural Echoes (Quotes)</h2>
+                </div>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <textarea id="quote-text" rows="2" placeholder="Write or paste an inspiring thought..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all resize-none"></textarea>
+                <div class="flex space-x-2">
+                    <input type="text" id="quote-author" placeholder="Author" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addQuote()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Inject
+                    </button>
+                </div>
+            </div>
+
+            <div id="quote-list" class="flex-1 overflow-y-auto space-y-3 pr-1">
+                </div>
+        </section>
+
+    </main>
+
+    <script type="module">
+        // Import Firebase modules v10+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // TODO: Replace this with your exact Firebase project configurations
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase & Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- REALTIME DATA SYNC ---
+        
+        // 1. Sync Movies
+        onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("movie-list");
+            document.getElementById("movie-count").innerText = snapshot.size;
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                list.innerHTML += `
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
+                        <div>
+                            <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm">${data.title}</p>
+                            <span class="text-[10px] uppercase font-mono tracking-wider text-emerald-500/60">${data.genre || 'General'}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="toggleMovie('${doc.id}', ${data.watched})" class="text-xs ${data.watched ? 'text-emerald-400' : 'text-gray-500'} hover:text-emerald-300 p-1">
+                                <i class="fa-solid ${data.watched ? 'fa-circle-check' : 'fa-circle'}"></i>
+                            </button>
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>`;
+            });
+        });
+
+        // 2. Sync Study Materials
+        onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("study-list");
+            document.getElementById("study-count").innerText = snapshot.size;
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const linkHTML = data.link ? `<a href="${data.link}" target="_blank" class="text-xs text-teal-400 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[10px]"></i> Resource</a>` : '';
+                list.innerHTML += `
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
+                        <div class="truncate mr-2">
+                            <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
+                            ${linkHTML}
+                        </div>
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1 flex-shrink-0">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>`;
+            });
+        });
+
+        // 3. Sync Quotes
+        onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snapshot) => {
+            const list = document.getElementById("quote-list");
+            list.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                list.innerHTML += `
+                    <div class="bg-gradient-to-br from-emerald-950/30 to-slate-950/60 p-4 rounded-xl border border-emerald-950/50 relative group">
+                        <p class="text-sm italic text-emerald-100/90 tracking-wide">"${data.text}"</p>
+                        <p class="text-right text-xs font-mono text-emerald-400/70 mt-2">— ${data.author || 'Unknown'}</p>
+                        <button onclick="deleteItem('quotes', '${doc.id}')" class="absolute top-2 right-2 text-[10px] text-red-900/40 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>`;
+            });
+        });
+
+        // --- WRITE ACTIONS ---
+        window.addMovie = async () => {
+            const title = document.getElementById("movie-title");
+            const genre = document.getElementById("movie-genre");
+            if(!title.value.trim()) return;
+            await addDoc(collection(db, "movies"), { title: title.value, genre: genre.value, watched: false, createdAt: new Date() });
+            title.value = ""; genre.value = "";
+        };
+
+        window.addStudyMaterial = async () => {
+            const topic = document.getElementById("study-topic");
+            const link = document.getElementById("study-link");
+            if(!topic.value.trim()) return;
+            await addDoc(collection(db, "study_materials"), { topic: topic.value, link: link.value, createdAt: new Date() });
+            topic.value = ""; link.value = "";
+        };
+
+        window.addQuote = async () => {
+            const text = document.getElementById("quote-text");
+            const author = document.getElementById("quote-author");
+            if(!text.value.trim()) return;
+            await addDoc(collection(db, "quotes"), { text: text.value, author: author.value, createdAt: new Date() });
+            text.value = ""; author.value = "";
+        };
+
+        // --- UPDATE & DELETE ACTIONS ---
+        window.toggleMovie = async (id, currentStatus) => {
+            await updateDoc(doc(db, "movies", id), { watched: !currentStatus });
+        };
+
+        window.deleteItem = async (collectionName, id) => {
+            if(confirm("Purge document from core memory?")) {
+                await deleteDoc(doc(db, collectionName, id));
+            }
+        };
+    </script>
+</body>
+</html>

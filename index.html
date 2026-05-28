@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M I N D  S H E L F</title>
+    <title>M I N D S H E L F</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,96 +11,57 @@
         :root {
             --mouse-x: 50%;
             --mouse-y: 0%;
-            --bg-dark: #030712;
-            --panel-bg: rgba(11, 17, 32, 0.65);
-            --border-glow: rgba(16, 185, 129, 0.2);
-            --neon-accent: #10b981;
-            --neon-teal: #34d399;
-            --muted-text: #6b7280;
         }
-
         body {
-            background-color: var(--bg-dark);
-            /* Refined backdrop tracking matrix */
+            background-color: #0b0f17;
+            /* Combines your static header gradient with a dynamic, moving radial cursor glow */
             background-image: 
-                radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 0%, #061c12 0%, var(--bg-dark) 75%);
+                radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
             background-attachment: fixed;
-            letter-spacing: -0.01em;
         }
-
-        /* Premium Glass Panel UI Architecture */
         .glass-panel {
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(16, 185, 129, 0.12);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(16, 24, 40, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
-        
+        /* Subtle interactive hover illumination for the dashboard cards */
         .glass-panel:hover {
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.06), 0 20px 40px -10px rgba(0, 0, 0, 0.7);
-            transform: translateY(-3px);
+            border-color: rgba(16, 185, 129, 0.35);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
         }
-
-        /* Clean Terminal Forms */
-        .input-element {
-            background: rgba(3, 7, 18, 0.6);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 10px;
-            color: #f3f4f6;
-            transition: all 0.3s ease;
-        }
-
-        .input-element:focus {
+        .neon-glow:focus {
             outline: none;
-            border-color: var(--neon-accent);
-            background: rgba(3, 7, 18, 0.9);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
-
         select option {
-            background-color: var(--bg-dark);
-            color: #f3f4f6;
+            background-color: #0b0f17;
+            color: #e2e8f0;
         }
-
-        /* Custom Scrollbar Engine */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(16, 185, 129, 0.15);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(16, 185, 129, 0.4);
-        }
-
-        /* --- MIND SHELF Cinematic Text Intro --- */
         .intro-svg-text {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 21px;
+            font-family: 'Arial Black', Impact, system-ui, sans-serif;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
-            stroke: var(--neon-accent);
-            stroke-width: 0.5px;
+            /* Laser outline drawing effect during initialization */
+            stroke: #10b981;
+            stroke-width: 0.6px;
             fill: url(#header-gradient);
             fill-opacity: 0;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
-            animation: drawOutline 2s cubic-bezier(0.16, 1, 0.3, 1) forwards, fillText 0.8s ease-in forwards 1.4s;
+            /* Combines line drawing with a smooth fade-in color fill */
+            animation: drawOutline 2s ease-in-out forwards, fillText 0.8s ease-in forwards 1.6s;
         }
 
         @keyframes drawOutline {
-            0% { stroke-dashoffset: 400; stroke-width: 0.5px; }
+            0% { stroke-dashoffset: 400; stroke-width: 0.6px; }
+            70% { stroke-width: 0.4px; }
             100% { stroke-dashoffset: 0; stroke-width: 0px; }
         }
 
@@ -109,63 +70,85 @@
             100% { fill-opacity: 1; }
         }
 
-        /* --- Spotify Pulse Equalizer --- */
+        /* --- Refactored Cyberpunk Spotify Equalizer Plugin --- */
         .spotify-bar {
-            width: 2.5px;
-            height: 14px;
-            background-color: var(--neon-accent);
-            animation: bounceEqualizer 0.8s ease-in-out infinite alternate;
-            border-radius: 2px;
-            margin: 0 1px;
+            width: 3px;
+            height: 18px;
+            background-color: #111827;
+            animation: bounceEqualizer 1s ease-in-out infinite alternate;
+            border-radius: 4px;
+            margin: 0 1.5px;
         }
         .spotify-bar:nth-child(1) { animation-delay: 0.1s; background-color: #10b981; }
-        .spotify-bar:nth-child(2) { animation-delay: 0.4s; background-color: #34d399; height: 18px; }
+        .spotify-bar:nth-child(2) { animation-delay: 0.4s; background-color: #34d399; height: 22px; }
         .spotify-bar:nth-child(3) { animation-delay: 0.2s; background-color: #059669; }
-        .spotify-bar:nth-child(4) { animation-delay: 0.5s; background-color: #a7f3d0; }
+        .spotify-bar:nth-child(4) { animation-delay: 0.6s; background-color: #6ee7b7; }
 
         @keyframes bounceEqualizer {
-            0% { transform: scaleY(0.4); }
-            100% { transform: scaleY(1.2); }
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1.1); }
         }
 
-        /* --- Neo-Toggle Interactive Matrix --- */
+        /* --- Uiverse Advanced Neo-Toggle Framework --- */
         .neo-toggle-container {
-            --toggle-width: 64px;
-            --toggle-height: 30px;
-            --toggle-bg: #030712;
-            --toggle-off-color: #ef4444; 
-            --toggle-on-color: #10b981;
-            --toggle-transition: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            --toggle-width: 72px;
+            --toggle-height: 34px;
+            --toggle-bg: #090d16;
+            --toggle-off-color: #f43f5e; /* Vibrant Red when Unwatched */
+            --toggle-on-color: #36f9c7;   /* Emerald Green when Watched */
+            --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
             display: inline-flex;
+            flex-direction: column;
+            user-select: none;
         }
-        .neo-toggle-input { position: absolute; opacity: 0; width: 0; height: 0; }
-        .neo-toggle { position: relative; width: var(--toggle-width); height: var(--toggle-height); display: block; cursor: pointer; }
+        .neo-toggle-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .neo-toggle {
+            position: relative;
+            width: var(--toggle-width);
+            height: var(--toggle-height);
+            display: block;
+            cursor: pointer;
+            transform: translateZ(0);
+            perspective: 500px;
+        }
         .neo-track {
             position: absolute;
             inset: 0;
             border-radius: calc(var(--toggle-height) / 2);
+            overflow: hidden;
+            transform: translateZ(-1px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        .neo-background-layer {
+            position: absolute;
+            inset: 0;
             background: var(--toggle-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: border-color var(--toggle-transition);
+            background-image: linear-gradient(-45deg, rgba(10, 10, 10, 0.8) 0%, rgba(20, 20, 20, 0.3) 50%, rgba(10, 10, 10, 0.8) 100%);
         }
         .neo-grid-layer {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(to right, rgba(239, 68, 68, 0.15) 1px, transparent 1px);
-            background-size: 5px 100%;
-            opacity: 0.3;
+            background-image: linear-gradient(to right, rgba(244, 63, 94, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(244, 63, 94, 0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            opacity: 0.4;
             transition: opacity var(--toggle-transition);
         }
         .neo-toggle-input:checked + .neo-toggle .neo-grid-layer {
-            background-image: linear-gradient(to right, rgba(16, 185, 129, 0.15) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(54, 249, 199, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(54, 249, 199, 0.08) 1px, transparent 1px);
+            opacity: 1;
         }
         .neo-thumb {
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             transition: transform var(--toggle-transition);
             z-index: 1;
@@ -175,99 +158,126 @@
             inset: 0;
             border-radius: 50%;
             background: var(--toggle-off-color);
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-            transition: background var(--toggle-transition), box-shadow var(--toggle-transition);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+            transition: all var(--toggle-transition);
         }
         .neo-thumb-core {
             position: absolute;
-            inset: 3.5px;
+            inset: 4px;
             border-radius: 50%;
-            background: #0b1120;
+            background: #0b0f17;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .neo-thumb-wave {
             position: absolute;
-            inset: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--toggle-off-color);
-            transition: background var(--toggle-transition);
+            transition: all var(--toggle-transition);
         }
         .neo-spectrum-analyzer {
             position: absolute;
             bottom: 4px;
             right: 8px;
-            height: 6px;
+            height: 8px;
             display: flex;
             align-items: flex-end;
-            gap: 1px;
+            gap: 1.5px;
             opacity: 0;
             transition: opacity var(--toggle-transition);
         }
-        .neo-spectrum-bar { width: 1.5px; height: 2px; background-color: var(--toggle-on-color); }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb { transform: translateX(34px); }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb-ring { background-color: var(--toggle-on-color); box-shadow: 0 0 12px rgba(16, 185, 129, 0.5); }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb-wave { background: var(--toggle-on-color); }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-analyzer { opacity: 0.8; }
+        .neo-spectrum-bar {
+            width: 1.5px;
+            height: 2px;
+            background-color: var(--toggle-on-color);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb {
+            transform: translateX(calc(var(--toggle-width) - 34px));
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb-ring {
+            background-color: var(--toggle-on-color);
+            box-shadow: 0 0 12px rgba(54, 249, 199, 0.5);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb-wave {
+            background: var(--toggle-on-color);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-analyzer { opacity: 1; }
         .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(1) { animation: neo-spectrum 0.6s infinite; }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(2) { animation: neo-spectrum 0.4s 0.1s infinite; }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.5s 0.2s infinite; }
-        @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 6px; } }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(2) { animation: neo-spectrum 0.5s 0.1s infinite; }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.7s 0.2s infinite; }
+        @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 7px; } }
 
-        /* --- Tactical Erasure Core (Bin Button) --- */
+        /* --- Recalibrated and Filled Cyberpunk Bin Button --- */
         .bin-button {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background-color: rgba(239, 68, 68, 0.05);
+            background-color: rgba(244, 63, 94, 0.1);
             cursor: pointer;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            transition-duration: 0.3s;
             position: relative;
             overflow: hidden;
         }
-        .bin-bottom { width: 11px; z-index: 2; fill: #ef4444; transition: fill 0.3s; }
-        .bin-top { width: 12px; transform-origin: right center; transition: transform 0.3s, fill 0.3s; z-index: 2; fill: #ef4444; }
-        .bin-button:hover .bin-top { transform: rotate(35deg); fill: #ffffff; }
-        .bin-button:hover .bin-bottom { fill: #ffffff; }
-        .bin-button:hover { background-color: #dc2626; border-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); }
-        .bin-button:active { transform: scale(0.9); }
-        .garbage { position: absolute; width: 10px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
-        .bin-button:hover .garbage { animation: throw 0.4s linear; }
+        .bin-bottom-fix { 
+            width: 16px; 
+            z-index: 2; 
+            fill: #f43f5e; 
+            transition: fill 0.3s; 
+            margin-top: -1px;
+        }
+        .bin-top-fix { 
+            width: 18px; 
+            transform-origin: right center; 
+            transition-duration: 0.3s; 
+            z-index: 2; 
+            fill: #f43f5e; 
+        }
+        .bin-button:hover .bin-top-fix { transform: rotate(45deg); fill: #ffffff; }
+        .bin-button:hover .bin-bottom-fix { fill: #ffffff; }
+        .bin-button:hover { background-color: #e11d48; border-color: #f43f5e; }
+        .bin-button:active { transform: scale(0.92); }
+        .garbage-fix { position: absolute; width: 12px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
+        .bin-button:hover .garbage-fix { animation: throw 0.4s linear; }
         @keyframes throw {
-            from { transform: translate(-100%, -100%); opacity: 0; }
+            from { transform: translate(-120%, -120%); opacity: 0; }
             to { transform: translate(0%, 0%); opacity: 1; }
         }
     </style>
 </head>
-<body class="text-gray-300 min-h-screen font-sans pb-16">
+<body class="text-gray-200 min-h-screen font-sans pb-12">
 
-    <header class="w-full max-w-7xl mx-auto px-6 pt-8 pb-3 flex flex-col md:flex-row justify-between items-center border-b border-gray-800/40 mb-10 gap-4">
-        <div class="text-center sm:text-left">
-            <div class="h-10 flex items-center select-none justify-center sm:justify-start">
+    <header class="w-full max-w-7xl mx-auto px-4 pt-6 pb-2 flex flex-col sm:flex-row justify-between items-center border-b border-emerald-900/30 mb-8 gap-4">
+        <div>
+            <div class="h-10 flex items-center select-none">
                 <svg viewBox="0 0 320 30" class="w-[260px] sm:w-[320px] h-full overflow-visible">
                     <defs>
                         <linearGradient id="header-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#10b981" />
-                            <stop offset="100%" stop-color="#6ee7b7" />
+                            <stop offset="0%" stop-color="#34d399" />
+                            <stop offset="100%" stop-color="#99f6e4" />
                         </linearGradient>
                     </defs>
                     <text x="0" y="22" class="intro-svg-text">MINDSHELF</text>
                 </svg>
             </div>
-            <p class="text-[10px] text-emerald-500/50 font-mono tracking-[0.4em] uppercase mt-1">L I B R A R Y</p>
+            <p class="text-xs text-emerald-500/70 tracking-widest uppercase text-center sm:text-left">L I B R A R Y</p>
         </div>
 
         <div class="flex items-center space-x-3">
-            <div class="flex items-center bg-gray-900/40 border border-gray-800/50 rounded-xl pl-3 pr-4 py-1.5 backdrop-blur-md">
-                <i class="fa-brands fa-spotify text-emerald-500 text-base mr-2.5 animate-spin [animation-duration:16s]"></i>
-                <div class="flex flex-col max-w-[120px] mr-4 font-mono">
-                    <span class="text-[11px] text-gray-200 font-bold truncate tracking-wide">Weightless</span>
-                    <span class="text-[9px] text-gray-500 truncate mt-0.5">Arijit Singh</span>
+            <div class="flex items-center bg-emerald-950/20 border border-emerald-500/15 rounded-full pl-3 pr-4 py-1.5 backdrop-blur-md">
+                <i class="fa-brands fa-spotify text-emerald-400 text-lg mr-2 animate-spin [animation-duration:12s]"></i>
+                <div class="flex flex-col max-w-[110px] sm:max-w-[140px] mr-3 font-mono">
+                    <span class="text-[10px] text-emerald-400 font-bold tracking-wide truncate">Weightless</span>
+                    <span class="text-[8px] text-gray-500 truncate">Arijit Singh</span>
                 </div>
-                <div class="flex items-center h-4">
+                <div class="flex items-center h-5 overflow-visible">
                     <div class="spotify-bar"></div>
                     <div class="spotify-bar"></div>
                     <div class="spotify-bar"></div>
@@ -275,30 +285,30 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2 text-[10px] font-mono bg-emerald-950/20 px-3.5 py-2.5 rounded-xl border border-emerald-500/20 text-emerald-400 h-[38px] tracking-widest font-bold">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block mr-1"></span> SYNCED
+            <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 py-2.5 rounded-full border border-emerald-500/20 text-emerald-400 h-[38px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1"></span> SYNCED
             </div>
         </div>
     </header>
 
-    <main class="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <main class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[560px]">
-            <div class="flex items-center justify-between mb-5">
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-emerald-950/30 border border-emerald-500/20 rounded-lg text-emerald-400">
-                        <i class="fa-solid fa-film text-base"></i>
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-film text-lg"></i>
                     </div>
-                    <h2 class="text-sm font-bold tracking-wider uppercase text-gray-100">Media Deck</h2>
+                    <h2 class="text-lg font-bold tracking-wide">Movie Library</h2>
                 </div>
-                <span id="movie-count" class="text-[10px] font-mono bg-gray-950 px-2.5 py-0.5 rounded border border-gray-800 text-emerald-400">0</span>
+                <span id="movie-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
             </div>
 
-            <div class="space-y-2.5 mb-5 bg-gray-950/40 p-3 rounded-xl border border-gray-800/40">
-                <input type="text" id="movie-title" placeholder="Title..." class="w-full input-element px-3 py-2 text-sm">
+            <div class="space-y-2 mb-4 bg-slate-950/30 p-3 rounded-xl border border-emerald-950/50">
+                <input type="text" id="movie-title" placeholder="Title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-3 py-2 text-sm neon-glow transition-all">
                 
                 <div class="grid grid-cols-2 gap-2">
-                    <select id="movie-genre" class="input-element px-2 py-2 text-sm cursor-pointer">
+                    <select id="movie-genre" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
                         <option value="" disabled selected>Genre...</option>
                         <option value="Action">Action</option>
                         <option value="Sci-Fi">Sci-Fi</option>
@@ -310,7 +320,7 @@
                         <option value="Wholesome">Wholesome</option>
                     </select>
 
-                    <select id="movie-type" class="input-element px-2 py-2 text-sm cursor-pointer">
+                    <select id="movie-type" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
                         <option value="Movie">Movie</option>
                         <option value="Web Series">Web Series</option>
                     </select>
@@ -318,8 +328,8 @@
 
                 <div class="flex items-center justify-between pt-1">
                     <div class="flex items-center space-x-1">
-                        <span class="text-[10px] text-gray-500 mr-1 font-mono uppercase tracking-wider">Rating:</span>
-                        <div id="star-rating-selector" class="text-gray-700 flex space-x-1 text-xs">
+                        <span class="text-xs text-gray-400 mr-1 font-mono">Rating:</span>
+                        <div id="star-rating-selector" class="text-gray-600 flex space-x-1 text-sm">
                             <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(1)" data-index="1"></i>
                             <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(2)" data-index="2"></i>
                             <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(3)" data-index="3"></i>
@@ -328,63 +338,66 @@
                         </div>
                     </div>
 
-                    <button onclick="addMovie()" class="bg-emerald-600 hover:bg-emerald-500 text-gray-950 text-[11px] uppercase tracking-wider font-bold px-4 py-2 rounded-lg transition-all active:scale-95">
-                        Incorporate
+                    <button onclick="addMovie()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-md active:scale-95">
+                        Add Media
                     </button>
                 </div>
             </div>
 
-            <div id="movie-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1"></div>
+            <div id="movie-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            </div>
         </section>
 
-        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[560px]">
-            <div class="flex items-center justify-between mb-5">
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-emerald-950/30 border border-emerald-500/20 rounded-lg text-emerald-400">
-                        <i class="fa-solid fa-graduation-cap text-base"></i>
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
                     </div>
-                    <h2 class="text-sm font-bold tracking-wider uppercase text-gray-100">Study Stack</h2>
+                    <h2 class="text-lg font-bold tracking-wide">Study Stack</h2>
                 </div>
-                <span id="study-count" class="text-[10px] font-mono bg-gray-950 px-2.5 py-0.5 rounded border border-gray-800 text-emerald-400">0</span>
+                <span id="study-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
             </div>
 
-            <div class="space-y-2.5 mb-5">
-                <input type="text" id="study-topic" placeholder="Topic index..." class="w-full input-element px-3.5 py-2 text-sm">
+            <div class="space-y-2 mb-4">
+                <input type="text" id="study-topic" placeholder="Topic or subject..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2.5 text-sm neon-glow transition-all">
                 <div class="flex space-x-2">
-                    <input type="text" id="study-link" placeholder="Resource link URL (Optional)" class="w-2/3 input-element px-3 py-2 text-sm">
-                    <button onclick="addStudyMaterial()" class="w-1/3 bg-emerald-600 hover:bg-emerald-500 text-gray-950 text-[11px] uppercase tracking-wider font-bold rounded-lg transition-all active:scale-95">
-                        Log Index
+                    <input type="text" id="study-link" placeholder="Resource URL (Optional)" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addStudyMaterial()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Track
                     </button>
                 </div>
             </div>
 
-            <div id="study-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1"></div>
+            <div id="study-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            </div>
         </section>
 
-        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[560px]">
-            <div class="flex items-center justify-between mb-5">
+        <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
+            <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-emerald-950/30 border border-emerald-500/20 rounded-lg text-emerald-400">
-                        <i class="fa-solid fa-bolt text-base"></i>
+                    <div class="p-2 bg-emerald-950/60 border border-emerald-500/30 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-bolt text-lg"></i>
                     </div>
-                    <h2 class="text-sm font-bold tracking-wider uppercase text-gray-100">Neural Echoes</h2>
+                    <h2 class="text-lg font-bold tracking-wide">Neural Echoes</h2>
                 </div>
             </div>
 
-            <div class="space-y-2.5 mb-5">
-                <textarea id="quote-text" rows="2" placeholder="Record inspiring ideation..." class="w-full input-element px-3.5 py-2 text-sm resize-none"></textarea>
+            <div class="space-y-2 mb-4">
+                <textarea id="quote-text" rows="2" placeholder="Write or paste an inspiring thought..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all resize-none"></textarea>
                 <div class="flex space-x-2">
-                    <input type="text" id="quote-author" placeholder="Attribution" class="w-2/3 input-element px-3 py-2 text-sm">
-                    <button onclick="addQuote()" class="w-1/3 bg-emerald-600 hover:bg-emerald-500 text-gray-950 text-[11px] uppercase tracking-wider font-bold rounded-lg transition-all active:scale-95">
-                        Transmit
+                    <input type="text" id="quote-author" placeholder="Author" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
+                    <button onclick="addQuote()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
+                        Inject
                     </button>
                 </div>
             </div>
 
-            <div id="quote-list" class="flex-1 overflow-y-auto space-y-3 pr-1"></div>
+            <div id="quote-list" class="flex-1 overflow-y-auto space-y-3 pr-1">
+            </div>
         </section>
 
-     </main>
+    </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -421,14 +434,14 @@
         function buildStarRatingDOM(ratingCount) {
             let ratingStarsHTML = '';
             for(let i = 1; i <= 5; i++) {
-                ratingStarsHTML += `<i class="fa-solid fa-star text-[9px] ${i <= ratingCount ? 'text-emerald-400' : 'text-gray-800'}"></i>`;
+                ratingStarsHTML += `<i class="fa-solid fa-star text-[10px] ${i <= ratingCount ? 'text-emerald-400' : 'text-gray-700'}"></i>`;
             }
             return ratingStarsHTML;
         }
 
-        // --- PIPELINE DATA LIFECYCLE ---
+        // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Media Items
+        // 1. Sync Movies (Using Advanced Neo-Toggles & Recalibrated Bin Buttons)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -440,12 +453,12 @@
                 const isChecked = data.watched ? "checked" : "";
                 
                 list.innerHTML += `
-                    <div class="bg-gray-950/30 p-3 rounded-xl border border-gray-800/40 flex items-center justify-between hover:border-gray-700/50 transition-colors">
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
                         <div class="truncate mr-2 max-w-[55%]">
                             <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
-                            <div class="flex items-center space-x-2 mt-1">
-                                <span class="text-[9px] px-1.5 py-0.2 bg-gray-900/60 rounded border border-gray-800 text-gray-400 font-mono uppercase tracking-wider">${formatBadge}</span>
-                                <span class="text-[10px] text-gray-500">${data.genre || 'General'}</span>
+                            <div class="flex items-center space-x-2 mt-0.5">
+                                <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
+                                <span class="text-[10px] text-gray-500 font-medium">${data.genre || 'General'}</span>
                                 <div class="flex space-x-0.5 pl-1">${starLayout}</div>
                             </div>
                         </div>
@@ -454,11 +467,14 @@
                                 <input type="checkbox" id="toggle-${doc.id}" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="neo-toggle-input">
                                 <label for="toggle-${doc.id}" class="neo-toggle">
                                     <div class="neo-track">
+                                        <div class="neo-background-layer"></div>
                                         <div class="neo-grid-layer"></div>
                                     </div>
                                     <div class="neo-thumb">
                                         <div class="neo-thumb-ring"></div>
-                                        <div class="neo-thumb-core"></div>
+                                        <div class="neo-thumb-core">
+                                            <div class="neo-thumb-wave"></div>
+                                        </div>
                                     </div>
                                     <div class="neo-spectrum-analyzer">
                                         <div class="neo-spectrum-bar"></div>
@@ -468,14 +484,14 @@
                                 </label>
                             </div>
 
-                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Purge Document">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top">
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Delete item">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
                                     <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom-fix">
                                     <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="garbage">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="garbage-fix">
                                     <path d="M14 14H16V22H14V14ZM18 14H20V22H18V14Z"></path>
                                 </svg>
                             </button>
@@ -484,25 +500,25 @@
             });
         });
 
-        // 2. Sync Knowledge Stack
+        // 2. Sync Study Materials (Upgraded with Recalibrated Bin Button)
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;
             list.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
-                const linkHTML = data.link ? `<a href="${data.link.startsWith('http') ? data.link : 'https://' + data.link}" target="_blank" class="text-xs text-emerald-400/80 hover:text-emerald-300 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[9px] mr-1"></i> Connected Node</a>` : '';
+                const linkHTML = data.link ? `<a href="${data.link.startsWith('http') ? data.link : 'https://' + data.link}" target="_blank" class="text-xs text-teal-400 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[10px]"></i> Resource</a>` : '';
                 list.innerHTML += `
-                    <div class="bg-gray-950/30 p-3 rounded-xl border border-gray-800/40 flex items-center justify-between hover:border-gray-700/50 transition-colors">
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
                         <div class="truncate mr-2">
                             <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
                             ${linkHTML}
                         </div>
-                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Purge Document">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top">
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Delete Item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
                                 <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom-fix">
                                 <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
                             </svg>
                         </button>
@@ -510,24 +526,24 @@
             });
         });
 
-        // 3. Sync Ideation Stack
+        // 3. Sync Quotes
         onSnapshot(query(collection(db, "quotes"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("quote-list");
             list.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 list.innerHTML += `
-                    <div class="bg-gradient-to-br from-gray-900/40 to-gray-950/50 p-4 rounded-xl border border-gray-800/40 relative group hover:border-emerald-500/10 transition-colors">
-                        <p class="text-sm italic text-gray-300/95 tracking-wide leading-relaxed">"${data.text}"</p>
-                        <p class="text-right text-[10px] font-mono text-emerald-500/60 mt-2.5 tracking-wider">— ${data.author || 'Unknown'}</p>
-                        <button onclick="deleteItem('quotes', '${doc.id}')" class="absolute top-2 right-2 text-[10px] text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity p-1">
-                            <i class="fa-solid fa-xmark"></i>
+                    <div class="bg-gradient-to-br from-emerald-950/30 to-slate-950/60 p-4 rounded-xl border border-emerald-950/50 relative group">
+                        <p class="text-sm italic text-emerald-100/90 tracking-wide">"${data.text}"</p>
+                        <p class="text-right text-xs font-mono text-emerald-400/70 mt-2">— ${data.author || 'Unknown'}</p>
+                        <button onclick="deleteItem('quotes', '${doc.id}')" class="absolute top-2 right-2 text-[10px] text-red-900/40 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>`;
             });
         });
 
-        // --- WRITE MUTATIONS ---
+        // --- WRITE ACTIONS ---
         window.addMovie = async () => {
             const title = document.getElementById("movie-title");
             const genre = document.getElementById("movie-genre");
@@ -563,18 +579,18 @@
             text.value = ""; author.value = "";
         };
 
-        // --- STATE MODIFIERS ---
+        // --- UPDATE & DELETE ACTIONS ---
         window.toggleMovie = async (id, currentStatus) => {
             await updateDoc(doc(db, "movies", id), { watched: !currentStatus });
         };
 
         window.deleteItem = async (collectionName, id) => {
-            if(confirm("Confirm hard purge from secure cloud registers?")) {
+            if(confirm("Delete Item from core memory?")) {
                 await deleteDoc(doc(db, collectionName, id));
             }
         };
 
-        // --- DYNAMIC CURSOR SIGNAL DISPATCHER ---
+        // --- AMBIENT MOUSE TRACKING ANIMATION ---
         window.addEventListener('mousemove', (e) => {
             const x = ((e.clientX / window.innerWidth) * 100).toFixed(2);
             const y = ((e.clientY / window.innerHeight) * 100).toFixed(2);

@@ -22,6 +22,11 @@
             border-color: #10b981;
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
+        /* Custom styled select components to match the theme */
+        select option {
+            background-color: #0b0f17;
+            color: #e2e8f0;
+        }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen font-sans pb-12">
@@ -40,6 +45,7 @@
 
     <main class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
         
+        <!-- ================= MOVIE LIBRARY ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -51,20 +57,52 @@
                 <span id="movie-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
             </div>
 
-            <div class="space-y-2 mb-4">
-                <input type="text" id="movie-title" placeholder="Movie title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2.5 text-sm neon-glow transition-all">
-                <div class="flex space-x-2">
-                    <input type="text" id="movie-genre" placeholder="Genre" class="w-2/3 bg-slate-950/60 border border-emerald-900/50 rounded-xl px-4 py-2 text-sm neon-glow transition-all">
-                    <button onclick="addMovie()" class="w-1/3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all shadow-md active:scale-95">
-                        Add
+            <!-- Upgraded Input Form Group -->
+            <div class="space-y-2 mb-4 bg-slate-950/30 p-3 rounded-xl border border-emerald-950/50">
+                <input type="text" id="movie-title" placeholder="Title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-3 py-2 text-sm neon-glow transition-all">
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="movie-genre" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
+                        <option value="" disabled selected>Genre...</option>
+                        <option value="Action">Action</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Horror">Horror</option>
+                    </select>
+
+                    <select id="movie-type" class="bg-slate-950/60 border border-emerald-900/50 rounded-xl px-2 py-2 text-sm text-gray-300 neon-glow transition-all cursor-pointer">
+                        <option value="Movie">Movie</option>
+                        <option value="Web Series">Web Series</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <!-- Interactive Star Rating Container -->
+                    <div class="flex items-center space-x-1">
+                        <span class="text-xs text-gray-400 mr-1 font-mono">Rating:</span>
+                        <div id="star-rating-selector" class="text-gray-600 flex space-x-1 text-sm">
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(1)" data-index="1"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(2)" data-index="2"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(3)" data-index="3"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(4)" data-index="4"></i>
+                            <i class="fa-solid fa-star cursor-pointer hover:text-emerald-400 transition-colors" onclick="setRating(5)" data-index="5"></i>
+                        </div>
+                    </div>
+
+                    <button onclick="addMovie()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-md active:scale-95">
+                        Add Media
                     </button>
                 </div>
             </div>
 
+            <!-- List Container -->
             <div id="movie-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
-                </div>
+            </div>
         </section>
 
+        <!-- ================= STUDY MATERIALS ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -87,9 +125,10 @@
             </div>
 
             <div id="study-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
-                </div>
+            </div>
         </section>
 
+        <!-- ================= MOTIVATIONAL QUOTES ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -111,17 +150,15 @@
             </div>
 
             <div id="quote-list" class="flex-1 overflow-y-auto space-y-3 pr-1">
-                </div>
+            </div>
         </section>
 
     </main>
 
     <script type="module">
-        // Import Firebase modules v10+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Integrated Zentro Firebase Profile Config
         const firebaseConfig = {
             apiKey: "AIzaSyDQTS1ll4900i_1rVmeVHMSSKR-JMMD3pU",
             authDomain: "zentro-9198c.firebaseapp.com",
@@ -131,28 +168,61 @@
             appId: "1:870979959946:web:f7456f422be3aa09a78173"
         };
 
-        // Initialize Firebase & Firestore
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Track selected rating state locally before injection
+        let currentSelectedRating = 0;
+
+        window.setRating = (rating) => {
+            currentSelectedRating = rating;
+            const stars = document.querySelectorAll('#star-rating-selector i');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-gray-600');
+                    star.classList.add('text-emerald-400');
+                } else {
+                    star.classList.add('text-gray-600');
+                    star.classList.remove('text-emerald-400');
+                }
+            });
+        };
+
+        // Helper tool to safely map rendered database star strings
+        function buildStarRatingDOM(ratingCount) {
+            let ratingStarsHTML = '';
+            for(let i = 1; i <= 5; i++) {
+                ratingStarsHTML += `<i class="fa-solid fa-star text-[10px] ${i <= ratingCount ? 'text-emerald-400' : 'text-gray-700'}"></i>`;
+            }
+            return ratingStarsHTML;
+        }
+
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies
+        // 1. Sync Movies (Enhanced)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
             list.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
+                const starLayout = buildStarRatingDOM(data.rating || 0);
+                const formatBadge = data.type || "Movie";
+                
                 list.innerHTML += `
-                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
-                        <div class="truncate mr-2">
+                    <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
+                        <div class="truncate mr-2 max-w-[65%]">
                             <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
-                            <span class="text-[10px] uppercase font-mono tracking-wider text-emerald-500/60">${data.genre || 'General'}</span>
+                            <div class="flex items-center space-x-2 mt-0.5">
+                                <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
+                                <span class="text-[10px] text-gray-500 font-medium">${data.genre || 'General'}</span>
+                                <div class="flex space-x-0.5 pl-1">${starLayout}</div>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2 flex-shrink-0">
-                            <button onclick="toggleMovie('${doc.id}', ${data.watched})" class="text-xs ${data.watched ? 'text-emerald-400' : 'text-gray-500'} hover:text-emerald-300 p-1">
-                                <i class="fa-solid ${data.watched ? 'fa-circle-check' : 'fa-circle'}"></i>
+                        <div class="flex items-center space-x-3 flex-shrink-0">
+                            <!-- Toggle Watched/Not Watched Pill Badge -->
+                            <button onclick="toggleMovie('${doc.id}', ${data.watched})" class="text-[10px] font-mono tracking-wider font-bold px-2 py-1 rounded-md border transition-all ${data.watched ? 'bg-emerald-900/30 text-emerald-400 border-emerald-500/30' : 'bg-slate-900/80 text-gray-400 border-gray-800 hover:border-emerald-900'}">
+                                ${data.watched ? 'WATCHED' : 'UNWATCHED'}
                             </button>
                             <button onclick="deleteItem('movies', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1">
                                 <i class="fa-solid fa-trash-can"></i>
@@ -204,9 +274,24 @@
         window.addMovie = async () => {
             const title = document.getElementById("movie-title");
             const genre = document.getElementById("movie-genre");
+            const type = document.getElementById("movie-type");
+            
             if(!title.value.trim()) return;
-            await addDoc(collection(db, "movies"), { title: title.value, genre: genre.value, watched: false, createdAt: new Date() });
-            title.value = ""; genre.value = "";
+            
+            await addDoc(collection(db, "movies"), { 
+                title: title.value, 
+                genre: genre.value || "General", 
+                type: type.value,
+                rating: currentSelectedRating,
+                watched: false, 
+                createdAt: new Date() 
+            });
+            
+            // Clean interface fields
+            title.value = ""; 
+            genre.value = "";
+            type.value = "Movie";
+            setRating(0);
         };
 
         window.addStudyMaterial = async () => {

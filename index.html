@@ -8,22 +8,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --mouse-x: 50%;
+            --mouse-y: 0%;
+        }
         body {
             background-color: #0b0f17;
-            background-image: radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
+            /* Combines your static header gradient with a dynamic, moving radial cursor glow */
+            background-image: 
+                radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
+            background-attachment: fixed;
         }
         .glass-panel {
             background: rgba(16, 24, 40, 0.65);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(16, 185, 129, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+        }
+        /* Subtle interactive hover illumination for the dashboard cards */
+        .glass-panel:hover {
+            border-color: rgba(16, 185, 129, 0.35);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
         }
         .neon-glow:focus {
             outline: none;
             border-color: #10b981;
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
-        /* Custom styled select components to match the theme */
         select option {
             background-color: #0b0f17;
             color: #e2e8f0;
@@ -323,6 +337,16 @@
                 await deleteDoc(doc(db, collectionName, id));
             }
         };
+        // --- AMBIENT MOUSE TRACKING ANIMATION ---
+        window.addEventListener('mousemove', (e) => {
+            // Calculate mouse position percentages relative to the viewport
+            const x = ((e.clientX / window.innerWidth) * 100).toFixed(2);
+            const y = ((e.clientY / window.innerHeight) * 100).toFixed(2);
+            
+            // Seamlessly inject coordinates into CSS variables
+            document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${y}%`);
+        });
     </script>
 </body>
 </html>

@@ -441,7 +441,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies (Using Advanced Neo-Toggles & Recalibrated Bin Buttons)
+        // 1. Sync Movies
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -484,7 +484,7 @@
                                 </label>
                             </div>
 
-                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Delete item">
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Purge Document">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
                                     <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
                                 </svg>
@@ -500,21 +500,29 @@
             });
         });
 
-        // 2. Sync Study Materials (Upgraded with Recalibrated Bin Button)
+        // 2. Sync Study Materials (FIXED: Handles standalone explicit URLs correctly)
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;
             list.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
-                const linkHTML = data.link ? `<a href="${data.link.startsWith('http') ? data.link : 'https://' + data.link}" target="_blank" class="text-xs text-teal-400 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[10px]"></i> Resource</a>` : '';
+                
+                // Logic to sanitize the URL and guarantee it behaves as an absolute standalone link
+                let correctLink = data.link ? data.link.trim() : '';
+                if (correctLink && !correctLink.startsWith('http://') && !correctLink.startsWith('https://')) {
+                    correctLink = 'https://' + correctLink;
+                }
+
+                const linkHTML = correctLink ? `<a href="${correctLink}" target="_blank" class="text-xs text-teal-400 hover:underline block mt-0.5 truncate max-w-[180px]"><i class="fa-solid fa-link text-[10px]"></i> Resource</a>` : '';
+                
                 list.innerHTML += `
                     <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950 flex items-center justify-between">
                         <div class="truncate mr-2">
                             <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
                             ${linkHTML}
                         </div>
-                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Delete Item">
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Purge Document">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
                                 <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
                             </svg>
@@ -585,7 +593,7 @@
         };
 
         window.deleteItem = async (collectionName, id) => {
-            if(confirm("Delete Item from core memory?")) {
+            if(confirm("Purge document from core memory?")) {
                 await deleteDoc(doc(db, collectionName, id));
             }
         };

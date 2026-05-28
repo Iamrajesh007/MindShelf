@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M I N D  S H E L F</title>
+    <title>M I N D S H E L F</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -69,7 +69,7 @@
             }
             100% {
                 stroke-dashoffset: 0;
-                stroke-width: 0px; /* Removes the stroke outline completely once done */
+                stroke-width: 0px;
             }
         }
 
@@ -78,7 +78,7 @@
                 fill-opacity: 0;
             }
             100% {
-                fill-opacity: 1; /* Sets text color to completely static and solid */
+                fill-opacity: 1;
             }
         }
     </style>
@@ -87,23 +87,17 @@
 
     <header class="w-full max-w-7xl mx-auto px-4 pt-6 pb-2 flex justify-between items-center border-b border-emerald-900/30 mb-8">
         <div>
-            <!-- <h1 class="text-2xl font-black tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 uppercase" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-    MINDSHELF
-</h1> -->
-            <!-- ANIMATED HEDAER -->
             <div class="h-10 flex items-center select-none">
-            <svg viewBox="0 0 320 30" class="w-[260px] sm:w-[320px] h-full overflow-visible">
-                <defs>
-                    <linearGradient id="header-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#34d399" />
-                        <stop offset="100%" stop-color="#99f6e4" />
-                    </linearGradient>
-                </defs>
-                <text x="0" y="22" class="intro-svg-text">MIND SHELF</text>
-            </svg>
-        </div>
-
-            
+                <svg viewBox="0 0 320 30" class="w-[260px] sm:w-[320px] h-full overflow-visible">
+                    <defs>
+                        <linearGradient id="header-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#34d399" />
+                            <stop offset="100%" stop-color="#99f6e4" />
+                        </linearGradient>
+                    </defs>
+                    <text x="0" y="22" class="intro-svg-text">MINDSHELF</text>
+                </svg>
+            </div>
             <p class="text-xs text-emerald-500/70 tracking-widest uppercase">L I B R A R Y</p>
         </div>
         <div class="flex items-center space-x-2 text-xs font-mono bg-emerald-950/40 px-3 py-1.5 rounded-full border border-emerald-500/20 text-emerald-400">
@@ -113,7 +107,6 @@
 
     <main class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- ================= MOVIE LIBRARY ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -125,7 +118,6 @@
                 <span id="movie-count" class="text-xs font-mono bg-emerald-950 px-2 py-0.5 rounded text-emerald-400 border border-emerald-900">0</span>
             </div>
 
-            <!-- Upgraded Input Form Group -->
             <div class="space-y-2 mb-4 bg-slate-950/30 p-3 rounded-xl border border-emerald-950/50">
                 <input type="text" id="movie-title" placeholder="Title..." class="w-full bg-slate-950/60 border border-emerald-900/50 rounded-xl px-3 py-2 text-sm neon-glow transition-all">
                 
@@ -149,7 +141,6 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-1">
-                    <!-- Interactive Star Rating Container -->
                     <div class="flex items-center space-x-1">
                         <span class="text-xs text-gray-400 mr-1 font-mono">Rating:</span>
                         <div id="star-rating-selector" class="text-gray-600 flex space-x-1 text-sm">
@@ -167,12 +158,10 @@
                 </div>
             </div>
 
-            <!-- List Container -->
             <div id="movie-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
             </div>
         </section>
 
-        <!-- ================= STUDY MATERIALS ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -198,7 +187,6 @@
             </div>
         </section>
 
-        <!-- ================= MOTIVATIONAL QUOTES ================= -->
         <section class="glass-panel rounded-2xl p-6 flex flex-col h-[550px]">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -269,7 +257,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies (Enhanced)
+        // 1. Sync Movies (Enhanced with Custom Toggle Switch)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -278,10 +266,11 @@
                 const data = doc.data();
                 const starLayout = buildStarRatingDOM(data.rating || 0);
                 const formatBadge = data.type || "Movie";
+                const isChecked = data.watched ? "checked" : "";
                 
                 list.innerHTML += `
                     <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
-                        <div class="truncate mr-2 max-w-[65%]">
+                        <div class="truncate mr-2 max-w-[60%]">
                             <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
                             <div class="flex items-center space-x-2 mt-0.5">
                                 <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
@@ -290,10 +279,11 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-3 flex-shrink-0">
-                            <!-- Toggle Watched/Not Watched Pill Badge -->
-                            <button onclick="toggleMovie('${doc.id}', ${data.watched})" class="text-[10px] font-mono tracking-wider font-bold px-2 py-1 rounded-md border transition-all ${data.watched ? 'bg-emerald-900/30 text-emerald-400 border-emerald-500/30' : 'bg-slate-900/80 text-gray-400 border-gray-800 hover:border-emerald-900'}">
-                                ${data.watched ? 'WATCHED' : 'UNWATCHED'}
-                            </button>
+                            <label class="relative inline-flex items-center cursor-pointer scale-[0.7] select-none">
+                                <input type="checkbox" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="sr-only peer">
+                                <div class="peer ring-0 bg-rose-400 rounded-full outline-none duration-300 after:duration-500 w-12 h-12 shadow-md peer-checked:bg-emerald-500 peer-focus:outline-none after:content-['✖️'] after:rounded-full after:absolute after:outline-none after:h-10 after:w-10 after:bg-gray-50 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-hover:after:scale-75 peer-checked:after:content-['✔️'] after:-rotate-180 peer-checked:after:rotate-0 peer-checked:after:left-1">
+                                </div>
+                            </label>
                             <button onclick="deleteItem('movies', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
@@ -390,13 +380,11 @@
                 await deleteDoc(doc(db, collectionName, id));
             }
         };
+
         // --- AMBIENT MOUSE TRACKING ANIMATION ---
         window.addEventListener('mousemove', (e) => {
-            // Calculate mouse position percentages relative to the viewport
             const x = ((e.clientX / window.innerWidth) * 100).toFixed(2);
             const y = ((e.clientY / window.innerHeight) * 100).toFixed(2);
-            
-            // Seamlessly inject coordinates into CSS variables
             document.documentElement.style.setProperty('--mouse-x', `${x}%`);
             document.documentElement.style.setProperty('--mouse-y', `${y}%`);
         });

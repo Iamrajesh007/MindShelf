@@ -14,7 +14,6 @@
         }
         body {
             background-color: #0b0f17;
-            /* Combines your static header gradient with a dynamic, moving radial cursor glow */
             background-image: 
                 radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.12) 0%, transparent 45%),
                 radial-gradient(circle at 50% 0%, #102a1e 0%, #0b0f17 70%);
@@ -27,7 +26,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
-        /* Subtle interactive hover illumination for the dashboard cards */
         .glass-panel:hover {
             border-color: rgba(16, 185, 129, 0.35);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
@@ -48,23 +46,19 @@
             font-weight: 900;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            /* Laser outline drawing effect during initialization */
             stroke: #10b981;
             stroke-width: 0.6px;
             fill: url(#header-gradient);
             fill-opacity: 0;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
-            /* Combines line drawing with a smooth fade-in color fill */
             animation: drawOutline 2s ease-in-out forwards, fillText 0.8s ease-in forwards 1.6s;
         }
-
         @keyframes drawOutline {
             0% { stroke-dashoffset: 400; stroke-width: 0.6px; }
             70% { stroke-width: 0.4px; }
             100% { stroke-dashoffset: 0; stroke-width: 0px; }
         }
-
         @keyframes fillText {
             0% { fill-opacity: 0; }
             100% { fill-opacity: 1; }
@@ -87,6 +81,156 @@
         @keyframes bounceEqualizer {
             0% { transform: scaleY(0.3); }
             100% { transform: scaleY(1.1); }
+        }
+
+        /* --- Uiverse Advanced Neo-Toggle Framework (Scoped) --- */
+        .neo-toggle-container {
+            --toggle-width: 72px;
+            --toggle-height: 34px;
+            --toggle-bg: #090d16;
+            --toggle-off-color: #f43f5e; /* Custom Red configuration when Unwatched */
+            --toggle-on-color: #36f9c7;
+            --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            user-select: none;
+        }
+        .neo-toggle-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .neo-toggle {
+            position: relative;
+            width: var(--toggle-width);
+            height: var(--toggle-height);
+            display: block;
+            cursor: pointer;
+            transform: translateZ(0);
+            perspective: 500px;
+        }
+        .neo-track {
+            position: absolute;
+            inset: 0;
+            border-radius: calc(var(--toggle-height) / 2);
+            overflow: hidden;
+            transform: translateZ(-1px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        .neo-background-layer {
+            position: absolute;
+            inset: 0;
+            background: var(--toggle-bg);
+            background-image: linear-gradient(-45deg, rgba(10, 10, 10, 0.8) 0%, rgba(20, 20, 20, 0.3) 50%, rgba(10, 10, 10, 0.8) 100%);
+        }
+        .neo-grid-layer {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(244, 63, 94, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(244, 63, 94, 0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            opacity: 0.4;
+            transition: opacity var(--toggle-transition);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-grid-layer {
+            background-image: linear-gradient(to right, rgba(54, 249, 199, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(54, 249, 199, 0.08) 1px, transparent 1px);
+            opacity: 1;
+        }
+        .neo-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            transition: transform var(--toggle-transition);
+            z-index: 1;
+        }
+        .neo-thumb-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--toggle-off-color);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+            transition: all var(--toggle-transition);
+        }
+        .neo-thumb-core {
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: #0b0f17;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .neo-thumb-wave {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--toggle-off-color);
+            transition: all var(--toggle-transition);
+        }
+        .neo-spectrum-analyzer {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            height: 8px;
+            display: flex;
+            align-items: flex-end;
+            gap: 1.5px;
+            opacity: 0;
+            transition: opacity var(--toggle-transition);
+        }
+        .neo-spectrum-bar {
+            width: 1.5px;
+            height: 2px;
+            background-color: var(--toggle-on-color);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb {
+            transform: translateX(calc(var(--toggle-width) - 34px));
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb-ring {
+            background-color: var(--toggle-on-color);
+            box-shadow: 0 0 12px rgba(54, 249, 199, 0.5);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-thumb-wave {
+            background: var(--toggle-on-color);
+        }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-analyzer { opacity: 1; }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(1) { animation: neo-spectrum 0.6s infinite; }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(2) { animation: neo-spectrum 0.5s 0.1s infinite; }
+        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.7s 0.2s infinite; }
+        @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 7px; } }
+
+        /* --- Uiverse Refactored High-Tech Bin Action Button --- */
+        .bin-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: rgba(244, 63, 94, 0.1);
+            cursor: pointer;
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            transition-duration: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .bin-bottom { width: 10px; z-index: 2; fill: #f43f5e; transition: fill 0.3s; }
+        .bin-top { width: 11px; transform-origin: right; transition-duration: 0.3s; z-index: 2; fill: #f43f5e; }
+        .bin-button:hover .bin-top { transform: rotate(45deg); fill: #ffffff; }
+        .bin-button:hover .bin-bottom { fill: #ffffff; }
+        .bin-button:hover { background-color: #e11d48; border-color: #f43f5e; }
+        .bin-button:active { transform: scale(0.92); }
+        .garbage { position: absolute; width: 9px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
+        .bin-button:hover .garbage { animation: throw 0.4s linear; }
+        @keyframes throw {
+            from { transform: translate(-150%, -150%); opacity: 0; }
+            to { transform: translate(0%, 0%); opacity: 1; }
         }
     </style>
 </head>
@@ -279,7 +423,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies
+        // 1. Sync Movies (Using Advanced Neo-Toggles & Animated Bin Buttons)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -292,7 +436,7 @@
                 
                 list.innerHTML += `
                     <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
-                        <div class="truncate mr-2 max-w-[60%]">
+                        <div class="truncate mr-2 max-w-[55%]">
                             <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
                             <div class="flex items-center space-x-2 mt-0.5">
                                 <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
@@ -300,21 +444,45 @@
                                 <div class="flex space-x-0.5 pl-1">${starLayout}</div>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-3 flex-shrink-0">
-                            <label class="relative inline-flex items-center cursor-pointer scale-[0.7] select-none">
-                                <input type="checkbox" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="sr-only peer">
-                                <div class="peer ring-0 bg-rose-400 rounded-full outline-none duration-300 after:duration-500 w-12 h-12 shadow-md peer-checked:bg-emerald-500 peer-focus:outline-none after:content-['✖️'] after:rounded-full after:absolute after:outline-none after:h-10 after:w-10 after:bg-gray-50 after:top-1 after:left-1 after:flex after:justify-center after:items-center peer-hover:after:scale-75 peer-checked:after:content-['✔️'] after:-rotate-180 peer-checked:after:rotate-0 peer-checked:after:left-1">
-                                </div>
-                            </label>
-                            <button onclick="deleteItem('movies', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1">
-                                <i class="fa-solid fa-trash-can"></i>
+                        <div class="flex items-center space-x-2 flex-shrink-0">
+                            <div class="neo-toggle-container">
+                                <input type="checkbox" id="toggle-${doc.id}" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="neo-toggle-input">
+                                <label for="toggle-${doc.id}" class="neo-toggle">
+                                    <div class="neo-track">
+                                        <div class="neo-background-layer"></div>
+                                        <div class="neo-grid-layer"></div>
+                                    </div>
+                                    <div class="neo-thumb">
+                                        <div class="neo-thumb-ring"></div>
+                                        <div class="neo-thumb-core">
+                                            <div class="neo-thumb-wave"></div>
+                                        </div>
+                                    </div>
+                                    <div class="neo-spectrum-analyzer">
+                                        <div class="neo-spectrum-bar"></div>
+                                        <div class="neo-spectrum-bar"></div>
+                                        <div class="neo-spectrum-bar"></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Purge Document">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top">
+                                    <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom">
+                                    <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 33 39" class="garbage">
+                                    <path d="M14 14H16V22H14V14ZM18 14H20V22H18V14Z"></path>
+                                </svg>
                             </button>
                         </div>
                     </div>`;
             });
         });
 
-        // 2. Sync Study Materials
+        // 2. Sync Study Materials (Upgraded with Animated Bin Button)
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;
@@ -328,8 +496,13 @@
                             <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
                             ${linkHTML}
                         </div>
-                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="text-xs text-red-900/60 hover:text-red-400 p-1 flex-shrink-0">
-                            <i class="fa-solid fa-trash-can"></i>
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Purge Document">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top">
+                                <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom">
+                                <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
+                            </svg>
                         </button>
                     </div>`;
             });
@@ -369,10 +542,7 @@
                 createdAt: new Date() 
             });
             
-            title.value = ""; 
-            genre.value = "";
-            type.value = "Movie";
-            setRating(0);
+            title.value = ""; genre.value = ""; type.value = "Movie"; setRating(0);
         };
 
         window.addStudyMaterial = async () => {

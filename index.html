@@ -27,7 +27,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
         }
-        /* Subtle interactive hover illumination for the dashboard cards */
         .glass-panel:hover {
             border-color: rgba(16, 185, 129, 0.35);
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
@@ -48,14 +47,12 @@
             font-weight: 900;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            /* Laser outline drawing effect during initialization */
             stroke: #10b981;
             stroke-width: 0.6px;
             fill: url(#header-gradient);
             fill-opacity: 0;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
-            /* Combines line drawing with a smooth fade-in color fill */
             animation: drawOutline 2s ease-in-out forwards, fillText 0.8s ease-in forwards 1.6s;
         }
 
@@ -94,8 +91,8 @@
             --toggle-width: 72px;
             --toggle-height: 34px;
             --toggle-bg: #090d16;
-            --toggle-off-color: #f43f5e; /* Vibrant Red when Unwatched */
-            --toggle-on-color: #36f9c7;   /* Emerald Green when Watched */
+            --toggle-off-color: #f43f5e;
+            --toggle-on-color: #36f9c7;
             --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             position: relative;
             display: inline-flex;
@@ -210,45 +207,71 @@
         .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.7s 0.2s infinite; }
         @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 7px; } }
 
-        /* --- Recalibrated and Filled Cyberpunk Bin Button --- */
-        .bin-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
+        /* --- Uiverse Sliding Delete Button --- */
+        .delete-btn {
+            width: 100px;
             height: 34px;
-            border-radius: 50%;
-            background-color: rgba(244, 63, 94, 0.1);
             cursor: pointer;
-            border: 1px solid rgba(244, 63, 94, 0.25);
-            transition-duration: 0.3s;
+            display: flex;
+            align-items: center;
+            background: #e62222;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
-        .bin-bottom-fix { 
-            width: 16px; 
-            z-index: 2; 
-            fill: #f43f5e; 
-            transition: fill 0.3s; 
-            margin-top: -1px;
+
+        .delete-btn, .delete-btn span {
+            transition: 250ms cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .bin-top-fix { 
-            width: 18px; 
-            transform-origin: right center; 
-            transition-duration: 0.3s; 
-            z-index: 2; 
-            fill: #f43f5e; 
+
+        .delete-btn .text {
+            transform: translateX(18px);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .bin-button:hover .bin-top-fix { transform: rotate(45deg); fill: #ffffff; }
-        .bin-button:hover .bin-bottom-fix { fill: #ffffff; }
-        .bin-button:hover { background-color: #e11d48; border-color: #f43f5e; }
-        .bin-button:active { transform: scale(0.92); }
-        .garbage-fix { position: absolute; width: 12px; z-index: 1; opacity: 0; transition: all 0.3s; fill: #ffffff; }
-        .bin-button:hover .garbage-fix { animation: throw 0.4s linear; }
-        @keyframes throw {
-            from { transform: translate(-120%, -120%); opacity: 0; }
-            to { transform: translate(0%, 0%); opacity: 1; }
+
+        .delete-btn .icon {
+            position: absolute;
+            border-left: 1px solid #c41b1b;
+            transform: translateX(66px);
+            height: 34px;
+            width: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-btn svg {
+            width: 14px;
+            fill: #eee;
+        }
+
+        .delete-btn:hover {
+            background: #ff3636;
+        }
+
+        .delete-btn:hover .text {
+            color: transparent;
+        }
+
+        .delete-btn:hover .icon {
+            width: 100px;
+            border-left: none;
+            transform: translateX(0);
+        }
+
+        .delete-btn:focus {
+            outline: none;
+        }
+
+        .delete-btn:active .icon svg {
+            transform: scale(0.8);
         }
     </style>
 </head>
@@ -422,10 +445,10 @@
             const stars = document.querySelectorAll('#star-rating-selector i');
             stars.forEach((star, index) => {
                 if (index < rating) {
-                    star.classList.remove('text-gray-700');
+                    star.classList.remove('text-gray-600');
                     star.classList.add('text-emerald-400');
                 } else {
-                    star.classList.add('text-gray-700');
+                    star.classList.add('text-gray-600');
                     star.classList.remove('text-emerald-400');
                 }
             });
@@ -441,7 +464,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies
+        // 1. Sync Movies (Using Custom Sliding Delete Button)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -454,7 +477,7 @@
                 
                 list.innerHTML += `
                     <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
-                        <div class="truncate mr-2 max-w-[55%]">
+                        <div class="truncate mr-2 max-w-[45%] lg:max-w-[50%]">
                             <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
                             <div class="flex items-center space-x-2 mt-0.5">
                                 <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
@@ -462,7 +485,7 @@
                                 <div class="flex space-x-0.5 pl-1">${starLayout}</div>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-2 flex-shrink-0">
+                        <div class="flex items-center space-x-3 flex-shrink-0">
                             <div class="neo-toggle-container">
                                 <input type="checkbox" id="toggle-${doc.id}" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="neo-toggle-input">
                                 <label for="toggle-${doc.id}" class="neo-toggle">
@@ -484,23 +507,20 @@
                                 </label>
                             </div>
 
-                            <button onclick="deleteItem('movies', '${doc.id}')" class="bin-button" title="Purge Document">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
-                                    <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom-fix">
-                                    <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="garbage-fix">
-                                    <path d="M14 14H16V22H14V14ZM18 14H20V22H18V14Z"></path>
-                                </svg>
+                            <button onclick="deleteItem('movies', '${doc.id}')" class="delete-btn" title="Purge Document">
+                                <span class="text">Purge</span>
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"></path>
+                                    </svg>
+                                </span>
                             </button>
                         </div>
                     </div>`;
             });
         });
 
-        // 2. Sync Study Materials (FIXED: Handles standalone explicit URLs correctly)
+        // 2. Sync Study Materials
         onSnapshot(query(collection(db, "study_materials"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("study-list");
             document.getElementById("study-count").innerText = snapshot.size;
@@ -508,7 +528,6 @@
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 
-                // Logic to sanitize the URL and guarantee it behaves as an absolute standalone link
                 let correctLink = data.link ? data.link.trim() : '';
                 if (correctLink && !correctLink.startsWith('http://') && !correctLink.startsWith('https://')) {
                     correctLink = 'https://' + correctLink;
@@ -522,13 +541,13 @@
                             <p class="text-sm font-medium text-gray-200 truncate">${data.topic}</p>
                             ${linkHTML}
                         </div>
-                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="bin-button" title="Purge Document">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-top-fix">
-                                <path d="M12 12H27V10H12V12ZM14 8H25V6H14V8Z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 39 39" class="bin-bottom-fix">
-                                <path d="M13 13H26V28H13V13ZM16 16V25H18V16H16ZM21 16V25H23V16H21Z"></path>
-                            </svg>
+                        <button onclick="deleteItem('study_materials', '${doc.id}')" class="delete-btn" title="Purge Document">
+                            <span class="text">Purge</span>
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"></path>
+                                </svg>
+                            </span>
                         </button>
                     </div>`;
             });

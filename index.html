@@ -86,127 +86,6 @@
             100% { transform: scaleY(1.1); }
         }
 
-        /* --- Uiverse Advanced Neo-Toggle Framework --- */
-        .neo-toggle-container {
-            --toggle-width: 72px;
-            --toggle-height: 34px;
-            --toggle-bg: #090d16;
-            --toggle-off-color: #f43f5e;
-            --toggle-on-color: #36f9c7;
-            --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            display: inline-flex;
-            flex-direction: column;
-            user-select: none;
-        }
-        .neo-toggle-input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .neo-toggle {
-            position: relative;
-            width: var(--toggle-width);
-            height: var(--toggle-height);
-            display: block;
-            cursor: pointer;
-            transform: translateZ(0);
-            perspective: 500px;
-        }
-        .neo-track {
-            position: absolute;
-            inset: 0;
-            border-radius: calc(var(--toggle-height) / 2);
-            overflow: hidden;
-            transform: translateZ(-1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        }
-        .neo-background-layer {
-            position: absolute;
-            inset: 0;
-            background: var(--toggle-bg);
-            background-image: linear-gradient(-45deg, rgba(10, 10, 10, 0.8) 0%, rgba(20, 20, 20, 0.3) 50%, rgba(10, 10, 10, 0.8) 100%);
-        }
-        .neo-grid-layer {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(to right, rgba(244, 63, 94, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(244, 63, 94, 0.1) 1px, transparent 1px);
-            background-size: 4px 4px;
-            opacity: 0.4;
-            transition: opacity var(--toggle-transition);
-        }
-        .neo-toggle-input:checked + .neo-toggle .neo-grid-layer {
-            background-image: linear-gradient(to right, rgba(54, 249, 199, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(54, 249, 199, 0.08) 1px, transparent 1px);
-            opacity: 1;
-        }
-        .neo-thumb {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            transition: transform var(--toggle-transition);
-            z-index: 1;
-        }
-        .neo-thumb-ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: var(--toggle-off-color);
-            box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
-            transition: all var(--toggle-transition);
-        }
-        .neo-thumb-core {
-            position: absolute;
-            inset: 4px;
-            border-radius: 50%;
-            background: #0b0f17;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .neo-thumb-wave {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--toggle-off-color);
-            transition: all var(--toggle-transition);
-        }
-        .neo-spectrum-analyzer {
-            position: absolute;
-            bottom: 4px;
-            right: 8px;
-            height: 8px;
-            display: flex;
-            align-items: flex-end;
-            gap: 1.5px;
-            opacity: 0;
-            transition: opacity var(--toggle-transition);
-        }
-        .neo-spectrum-bar {
-            width: 1.5px;
-            height: 2px;
-            background-color: var(--toggle-on-color);
-        }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb {
-            transform: translateX(calc(var(--toggle-width) - 34px));
-        }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb-ring {
-            background-color: var(--toggle-on-color);
-            box-shadow: 0 0 12px rgba(54, 249, 199, 0.5);
-        }
-        .neo-toggle-input:checked + .neo-toggle .neo-thumb-wave {
-            background: var(--toggle-on-color);
-        }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-analyzer { opacity: 1; }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(1) { animation: neo-spectrum 0.6s infinite; }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(2) { animation: neo-spectrum 0.5s 0.1s infinite; }
-        .neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) { animation: neo-spectrum 0.7s 0.2s infinite; }
-        @keyframes neo-spectrum { 0%, 100% { height: 2px; } 50% { height: 7px; } }
-
         /* --- Uiverse Sliding Delete Button --- */
         .delete-btn {
             width: 100px;
@@ -464,7 +343,7 @@
 
         // --- REALTIME DATA SYNC ---
         
-        // 1. Sync Movies (Using Custom Sliding Delete Button)
+        // 1. Sync Movies (Click-to-Toggle implementation)
         onSnapshot(query(collection(db, "movies"), orderBy("createdAt", "desc")), (snapshot) => {
             const list = document.getElementById("movie-list");
             document.getElementById("movie-count").innerText = snapshot.size;
@@ -473,12 +352,11 @@
                 const data = doc.data();
                 const starLayout = buildStarRatingDOM(data.rating || 0);
                 const formatBadge = data.type || "Movie";
-                const isChecked = data.watched ? "checked" : "";
                 
                 list.innerHTML += `
                     <div class="bg-slate-950/40 p-3 rounded-xl border border-emerald-950/80 flex items-center justify-between">
-                        <div class="truncate mr-2 max-w-[45%] lg:max-w-[50%]">
-                            <p class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200'} font-medium text-sm truncate">${data.title}</p>
+                        <div class="truncate mr-2 max-w-[65%]">
+                            <p onclick="toggleMovie('${doc.id}', ${data.watched})" class="${data.watched ? 'line-through text-gray-500' : 'text-gray-200 hover:text-emerald-400'} font-medium text-sm truncate cursor-pointer transition-colors" title="Click to toggle status">${data.title}</p>
                             <div class="flex items-center space-x-2 mt-0.5">
                                 <span class="text-[9px] px-1.5 py-0.2 bg-emerald-950/60 rounded border border-emerald-900 text-emerald-400/80 font-mono tracking-wider uppercase">${formatBadge}</span>
                                 <span class="text-[10px] text-gray-500 font-medium">${data.genre || 'General'}</span>
@@ -486,27 +364,6 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-3 flex-shrink-0">
-                            <div class="neo-toggle-container">
-                                <input type="checkbox" id="toggle-${doc.id}" ${isChecked} onclick="toggleMovie('${doc.id}', ${data.watched})" class="neo-toggle-input">
-                                <label for="toggle-${doc.id}" class="neo-toggle">
-                                    <div class="neo-track">
-                                        <div class="neo-background-layer"></div>
-                                        <div class="neo-grid-layer"></div>
-                                    </div>
-                                    <div class="neo-thumb">
-                                        <div class="neo-thumb-ring"></div>
-                                        <div class="neo-thumb-core">
-                                            <div class="neo-thumb-wave"></div>
-                                        </div>
-                                    </div>
-                                    <div class="neo-spectrum-analyzer">
-                                        <div class="neo-spectrum-bar"></div>
-                                        <div class="neo-spectrum-bar"></div>
-                                        <div class="neo-spectrum-bar"></div>
-                                    </div>
-                                </label>
-                            </div>
-
                             <button onclick="deleteItem('movies', '${doc.id}')" class="delete-btn" title="Purge Document">
                                 <span class="text">Purge</span>
                                 <span class="icon">
